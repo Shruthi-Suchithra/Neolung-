@@ -1,0 +1,82 @@
+{% load static %}
+{% include 'header.html' %}
+
+<!-- Chatbot Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+            <p class="d-inline-block border rounded-pill py-1 px-4">Chatbot</p>
+            <h1>Ask About NSCLC</h1>
+            <p>Use our interactive AI-based assistant to learn about Non-Small Cell Lung Cancer (NSCLC). This tool provides educational insights and guidance.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="bg-light rounded h-100 p-4">
+                    <div id="messages" class="messages mb-3" style="height: 400px; overflow-y: auto; padding: 10px; border:1px solid #dee2e6; border-radius:10px; background-color:#f8f9fa;"></div>
+                    <div class="input-group">
+                        <input id="input" type="text" class="form-control" placeholder="Type your question here...">
+                        <button id="send" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="bg-light rounded h-100 p-4">
+                    <h5>Quick Questions</h5>
+                    <ul class="list-group list-group-flush mt-2">
+                        <li class="list-group-item"><a href="#" class="quick-q" data-q="What is NSCLC?">What is NSCLC?</a></li>
+                        <li class="list-group-item"><a href="#" class="quick-q" data-q="Common symptoms of NSCLC">Common symptoms of NSCLC</a></li>
+                        <li class="list-group-item"><a href="#" class="quick-q" data-q="Stages of NSCLC">Stages of NSCLC</a></li>
+                        <li class="list-group-item"><a href="#" class="quick-q" data-q="Treatment options for NSCLC">Treatment options for NSCLC</a></li>
+                        <li class="list-group-item"><a href="#" class="quick-q" data-q="Prognosis of NSCLC">Prognosis of NSCLC</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Chatbot End -->
+
+<script>
+const KB = [
+  {q:['nsclc','non-small cell lung cancer'], a:'NSCLC is the most common type of lung cancer.'},
+  {q:['symptom','symptoms'], a:'Common symptoms include persistent cough, chest pain, shortness of breath, weight loss.'},
+  {q:['stages','stage'], a:'NSCLC is staged I-IV based on tumor size, lymph node involvement, and metastasis.'},
+  {q:['treatment','treatments'], a:'Treatment depends on stage and may include surgery, radiation, chemotherapy, targeted therapy, and immunotherapy.'},
+  {q:['prognosis','survival'], a:'Prognosis depends on stage at diagnosis, molecular characteristics, and patient health.'}
+];
+
+function sanitize(s){return s.toLowerCase().replace(/[?!.]/g,'').trim();}
+function findAnswer(text){
+  const t = sanitize(text);
+  for(const item of KB){
+    for(const k of item.q){
+      if(t.includes(k)) return item.a;
+    }
+  }
+  return 'I don\'t have a confident answer. Please consult a medical professional.';
+}
+
+const messagesEl = document.getElementById('messages');
+const inputEl = document.getElementById('input');
+const sendBtn = document.getElementById('send');
+
+function appendMessage(text, who='bot'){
+  const div = document.createElement('div');
+  div.textContent = text;
+  div.className = 'p-2 mb-2 rounded ' + (who==='user'?'bg-primary text-white':'bg-secondary text-white');
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function userAsk(text){
+  if(!text.trim()) return;
+  appendMessage(text,'user');
+  setTimeout(()=> appendMessage(findAnswer(text),'bot'), 400);
+}
+
+sendBtn.addEventListener('click', ()=>{ userAsk(inputEl.value); inputEl.value=''; });
+inputEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ userAsk(inputEl.value); inputEl.value=''; } });
+document.querySelectorAll('.quick-q').forEach(el=> el.addEventListener('click', e=>{ e.preventDefault(); inputEl.value = el.dataset.q; userAsk(el.dataset.q); }));
+</script>
+
+{% include 'footer.html' %}

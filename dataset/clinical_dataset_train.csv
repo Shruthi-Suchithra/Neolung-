@@ -1,0 +1,17 @@
+Patient_ID,Age,Gender,Smoking_Status,EGFR_Mutation,ALK_Rearrangement,KRAS_Mutation,ROS1_Rearrangement,NSCLC_Presence
+P012,54,Female,Never,1,0,0,0,1
+P010,59,Female,Former,0,0,0,0,0
+P004,45,Female,Never,1,0,0,0,1
+P003,61,Female,Never,0,0,0,1,1
+P019,46,Female,Never,0,1,0,0,1
+P015,58,Female,Never,0,0,0,1,1
+P020,62,Female,Never,0,0,0,1,1
+P008,42,Female,Never,0,0,0,0,0
+P009,47,Female,Never,0,0,0,0,0
+P007,50,Female,Never,1,0,0,0,1
+P013,49,Female,Never,0,1,0,0,1
+P002,52,Female,Never,0,1,0,0,1
+P014,66,Male,Former,0,0,1,0,1
+P006,55,Female,Never,0,1,0,0,1
+P017,51,Female,Never,0,0,0,0,0
+P001,48,Female,Never,1,0,0,0,1

@@ -1,0 +1,17 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+  <h2>Prediction Result</h2>
+
+  <div class="card" style="width: 18rem;">
+    <img src="{{ image_url }}" class="card-img-top" alt="Uploaded Image">
+    <div class="card-body">
+      <h5 class="card-title">{{ label }}</h5>
+      <p class="card-text">Confidence: {{ confidence }}</p>
+      <a href="{% url 'predict_nsclc' %}" class="btn btn-primary">Try Another</a>
+    </div>
+  </div>
+</div>
+
+{% include 'footer.html' %}

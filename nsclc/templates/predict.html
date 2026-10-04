@@ -1,0 +1,17 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <h2>NSCLC Classification</h2>
+    <p>Upload a CT Scan image (processed 2D slice) to classify.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <input type="file" name="image" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+</div>
+
+{% include 'footer.html' %}

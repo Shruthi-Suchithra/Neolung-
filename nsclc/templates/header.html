@@ -1,0 +1,284 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>NeoLung</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<style>
+    /* Floating Chat Button */
+    #chatBtn {
+        position: fixed;
+        bottom: 35px;
+        right: 100px;
+        background: #2b6be6;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        color: white;
+        font-size: 30px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+    }
+
+    #chatBtn:hover {
+        background: #1f54b4;
+    }
+
+    /* Chat Window */
+    #chatWindow {
+        width: 320px;
+        height: 450px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+        position: fixed;
+        bottom: 100px;
+        right: 25px;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* Chat Header */
+    .header {
+        background: #2b6be6;
+        color: white;
+        padding: 12px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    /* Chatbox content */
+    #chatbox {
+        flex: 1;
+        padding: 12px;
+        overflow-y: auto;
+    }
+
+    .msg {
+        padding: 10px 12px;
+        margin: 8px 0;
+        border-radius: 12px;
+        max-width: 80%;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .user {
+        background: #d9e7ff;
+        text-align: right;
+        margin-left: auto;
+    }
+
+    .bot {
+        background: #e9ecf2;
+        text-align: left;
+    }
+
+    /* Input Section */
+    .input-area {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ccc;
+    }
+
+    #message {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #aaa;
+    }
+
+    #sendBtn {
+        margin-left: 8px;
+        padding: 10px 15px;
+        background: #2b6be6;
+        border: none;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <!-- Spinner Start -->
+    <!-- <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div> -->
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light p-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <small class="fa fa-map-marker-alt text-primary me-2"></small>
+                    <small>Kochi, Kerala</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center py-3">
+                    <small class="far fa-clock text-primary me-2"></small>
+                    <small>Available Anytime</small>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <small class="fa fa-phone-alt text-primary me-2"></small>
+                    <small>+91 6282162759</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-0" href=""><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
+        <a href="home.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h1 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>NeoLung</h1>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                {% if user.is_superuser %}
+                <a href="" class="nav-item nav-link">Patient</a>
+                <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                {% elif user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
+                {% endif %}
+
+                <!-- <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+                        <a href="feature.html" class="dropdown-item">Feature</a>
+                        <a href="team.html" class="dropdown-item">Our Doctor</a>
+                        <a href="appointment.html" class="dropdown-item">Appointment</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+    </nav>
+    <!-- Navbar End -->
+    <!-- Floating Chat Button -->
+    <button id="chatBtn" onclick="toggleChat()">💬</button>
+
+    <!-- Chat Window -->
+    <div id="chatWindow">
+        <div class="header">🩺 NSCLCBot</div>
+
+        <div id="chatbox"></div>
+
+        <div class="input-area">
+            <input type="text" id="message" placeholder="Ask a question..." />
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+
+    <script>
+        function toggleChat() {
+            var chat = document.getElementById("chatWindow");
+            chat.style.display = (chat.style.display === "flex") ? "none" : "flex";
+        }
+
+        function sendMessage() {
+            var message = document.getElementById("message").value;
+            if (!message.trim()) return;
+
+            // User message bubble
+            document.getElementById("chatbox").innerHTML +=
+                '<div class="msg user"><b>You:</b> ' + message + '</div>';
+
+            // Scroll down
+            var chatbox = document.getElementById("chatbox");
+            chatbox.scrollTop = chatbox.scrollHeight;
+
+            fetch("{% url 'chatbot' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "message=" + encodeURIComponent(message)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Bot message bubble
+                    document.getElementById("chatbox").innerHTML +=
+                        '<div class="msg bot"><b>Bot:</b> ' + data.response + '</div>';
+
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            document.getElementById("message").value = "";
+        }
+    </script>
